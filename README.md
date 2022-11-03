@@ -1,10 +1,7 @@
 # Microsoft Provider for OAuth 2.0 Client
-[![Latest Version](https://img.shields.io/github/release/stevenmaguire/oauth2-microsoft.svg?style=flat-square)](https://github.com/stevenmaguire/oauth2-microsoft/releases)
-[![Build Status](https://img.shields.io/travis/stevenmaguire/oauth2-microsoft/master.svg?style=flat-square)](https://travis-ci.org/stevenmaguire/oauth2-microsoft)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/stevenmaguire/oauth2-microsoft.svg?style=flat-square)](https://scrutinizer-ci.com/g/stevenmaguire/oauth2-microsoft/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/stevenmaguire/oauth2-microsoft.svg?style=flat-square)](https://scrutinizer-ci.com/g/stevenmaguire/oauth2-microsoft)
-[![Total Downloads](https://img.shields.io/packagist/dt/stevenmaguire/oauth2-microsoft.svg?style=flat-square)](https://packagist.org/packages/stevenmaguire/oauth2-microsoft)
-[![Software License](https://img.shields.io/packagist/l/stevenmaguire/oauth2-microsoft.svg?style=flat-square)](LICENSE.md)
+[![Latest Version](https://img.shields.io/github/release/trunkstar/oauth2-microsoft.svg?style=flat-square)](https://github.com/trunkstar/oauth2-microsoft/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/trunkstar/oauth2-microsoft.svg?style=flat-square)](https://packagist.org/packages/trunkstar/oauth2-microsoft)
+[![Software License](https://img.shields.io/packagist/l/trunkstar/oauth2-microsoft.svg?style=flat-square)](LICENSE.md)
 
 This package provides Microsoft OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
@@ -13,25 +10,25 @@ This package provides Microsoft OAuth 2.0 support for the PHP League's [OAuth 2.
 To install, use composer:
 
 ```
-composer require stevenmaguire/oauth2-microsoft
+composer require trunkstar/oauth2-microsoft
 ```
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\Stevenmaguire\OAuth2\Client\Provider\Microsoft` as the provider.
+Usage is the same as The League's OAuth client, using `\Trunkstar\OAuth2\Client\Provider\Microsoft` as the provider.
 
 ### Authorization Code Flow
 
 ```php
-$provider = new Stevenmaguire\OAuth2\Client\Provider\Microsoft([
+$provider = new Trunkstar\OAuth2\Client\Provider\Microsoft([
     // Required
     'clientId'                  => '{microsoft-client-id}',
     'clientSecret'              => '{microsoft-client-secret}',
-    'redirectUri'               => 'https://example.com/callback-url',
+    'redirectUri'               => 'https://example.com/callback-url', // (deprecated)
     // Optional
-    'urlAuthorize'              => 'https://login.windows.net/common/oauth2/authorize',
-    'urlAccessToken'            => 'https://login.windows.net/common/oauth2/token',
-    'urlResourceOwnerDetails'   => 'https://outlook.office.com/api/v1.0/me'
+    'urlAuthorize'              => 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize',
+    'urlAccessToken'            => 'https://login.microsoftonline.com/organizations/oauth2/v2.0/token',
+    'urlResourceOwnerDetails'   => 'https://graph.microsoft.com/v1.0/me'
 ]);
 
 if (!isset($_GET['code'])) {

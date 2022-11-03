@@ -1,112 +1,60 @@
-<?php namespace Stevenmaguire\OAuth2\Client\Provider;
+<?php
 
-use GuzzleHttp\Psr7\Uri;
+namespace Trunkstar\OAuth2\Client\Provider;
+
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
 
 class Microsoft extends AbstractProvider
 {
-    /**
-     * Default scopes
-     *
-     * @var array
-     */
-    public $defaultScopes = ['wl.basic', 'wl.emails'];
+    public array $defaultScopes = ['User.Read'];
+    protected string $urlAuthorize = 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize';
+    protected string $urlAccessToken = 'https://login.microsoftonline.com/organizations/oauth2/v2.0/token';
+    protected string $urlResourceOwnerDetails = 'https://graph.microsoft.com/v1.0/me';
 
-    /**
-     * Base url for authorization.
-     *
-     * @var string
-     */
-    protected $urlAuthorize = 'https://login.live.com/oauth20_authorize.srf';
-
-    /**
-     * Base url for access token.
-     *
-     * @var string
-     */
-    protected $urlAccessToken = 'https://login.live.com/oauth20_token.srf';
-
-    /**
-     * Base url for resource owner.
-     *
-     * @var string
-     */
-    protected $urlResourceOwnerDetails = 'https://apis.live.net/v5.0/me';
-
-    /**
-     * Get authorization url to begin OAuth flow
-     *
-     * @return string
-     */
-    public function getBaseAuthorizationUrl()
+    public function getBaseAuthorizationUrl(): string
     {
         return $this->urlAuthorize;
     }
 
-    /**
-     * Get access token url to retrieve token
-     *
-     * @return string
-     */
-    public function getBaseAccessTokenUrl(array $params)
+    public function getBaseAccessTokenUrl(array $params): string
     {
         return $this->urlAccessToken;
     }
 
-    /**
-     * Get default scopes
-     *
-     * @return array
-     */
-    protected function getDefaultScopes()
+    protected function getDefaultScopes(): array
     {
         return $this->defaultScopes;
     }
 
-    /**
-     * Check a provider response for errors.
-     *
-     * @throws IdentityProviderException
-     * @param  ResponseInterface $response
-     * @return void
-     */
-    protected function checkResponse(ResponseInterface $response, $data)
+    protected function getAuthorizationHeaders($token = null): array
+    {
+        return [
+            'Authorization' => 'Bearer ' . $token,
+        ];
+    }
+
+    protected function checkResponse(ResponseInterface $response, $data): void
     {
         if (isset($data['error'])) {
             throw new IdentityProviderException(
-                (isset($data['error']['message']) ? $data['error']['message'] : $response->getReasonPhrase()),
+                $data['error']['message'] ?? $response->getReasonPhrase(),
                 $response->getStatusCode(),
-                $response
+                $response->getBody(),
             );
         }
     }
 
-    /**
-     * Generate a user object from a successful user details request.
-     *
-     * @param array $response
-     * @param AccessToken $token
-     * @return MicrosoftResourceOwner
-     */
-    protected function createResourceOwner(array $response, AccessToken $token)
+    protected function createResourceOwner(array $response, AccessToken $token): ResourceOwnerInterface
     {
         return new MicrosoftResourceOwner($response);
     }
 
-    /**
-     * Get provider url to fetch user details
-     *
-     * @param  AccessToken $token
-     *
-     * @return string
-     */
-    public function getResourceOwnerDetailsUrl(AccessToken $token)
+    public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
-        $uri = new Uri($this->urlResourceOwnerDetails);
-
-        return (string) Uri::withQueryValue($uri, 'access_token', (string) $token);
+        return $this->urlResourceOwnerDetails;
     }
 }
