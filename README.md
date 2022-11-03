@@ -1,7 +1,7 @@
 # Microsoft Provider for OAuth 2.0 Client
-[![Latest Version](https://img.shields.io/github/release/trunkstar/oauth2-microsoft.svg?style=flat-square)](https://github.com/trunkstar/oauth2-microsoft/releases)
-[![Total Downloads](https://img.shields.io/packagist/dt/trunkstar/oauth2-microsoft.svg?style=flat-square)](https://packagist.org/packages/trunkstar/oauth2-microsoft)
-[![Software License](https://img.shields.io/packagist/l/trunkstar/oauth2-microsoft.svg?style=flat-square)](LICENSE.md)
+[![Latest Version](https://img.shields.io/github/release/Trunkstar/oauth2-microsoft.svg?style=flat-square)](https://github.com/Trunkstar/oauth2-microsoft/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/Trunkstar/oauth2-microsoft.svg?style=flat-square)](https://packagist.org/packages/Trunkstar/oauth2-microsoft)
+[![Software License](https://img.shields.io/packagist/l/Trunkstar/oauth2-microsoft.svg?style=flat-square)](LICENSE.md)
 
 This package provides Microsoft OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
@@ -79,40 +79,12 @@ When creating your Microsoft authorization URL, you can specify the state and sc
 ```php
 $options = [
     'state' => 'OPTIONAL_CUSTOM_CONFIGURED_STATE',
-    'scope' => ['wl.basic', 'wl.signin'] // array or string
+    'scope' => ['User.Read'] // array or string
 ];
 
 $authorizationUrl = $provider->getAuthorizationUrl($options);
 ```
 If neither are defined, the provider will utilize internal defaults.
-
-At the time of authoring this documentation, the following scopes are available.
-
-##### Core
-- wl.basic
-- wl.offline_access
-- wl.signin
-
-##### Extended
-- wl.birthday
-- wl.calendars
-- wl.calendars_update
-- wl.contacts_birthday
-- wl.contacts_create
-- wl.contacts_calendars
-- wl.contacts_photos
-- wl.contacts_skydrive
-- wl.emails
-- wl.events_create
-- wl.imap
-- wl.phone_numbers
-- wl.photos
-- wl.postal_addresses
-- wl.skydrive
-- wl.skydrive_update
-- wl.work_profile
-- office.onenote_create
-
 
 ## Testing
 
@@ -122,16 +94,16 @@ $ ./vendor/bin/phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/stevenmaguire/oauth2-microsoft/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/Trunkstar/oauth2-microsoft/blob/master/CONTRIBUTING.md) for details.
 
 
 ## Credits
 
-- [Steven Maguire](https://github.com/stevenmaguire)
-- [All Contributors](https://github.com/stevenmaguire/oauth2-microsoft/contributors)
+- [Steven Maguire](https://github.com/Trunkstar)
+- [All Contributors](https://github.com/Trunkstar/oauth2-microsoft/contributors)
 
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/stevenmaguire/oauth2-microsoft/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/Trunkstar/oauth2-microsoft/blob/master/LICENSE) for more information.
 

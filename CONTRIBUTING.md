@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/stevenmaguire/oauth2-microsoft).
+We accept contributions via Pull Requests on [Github](https://github.com/Trunkstar/oauth2-microsoft).
 
 
 ## Pull Requests
