@@ -14,6 +14,25 @@ class Microsoft extends AbstractProvider
     protected string $urlAuthorize = 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize';
     protected string $urlAccessToken = 'https://login.microsoftonline.com/organizations/oauth2/v2.0/token';
     protected string $urlResourceOwnerDetails = 'https://graph.microsoft.com/v1.0/me';
+    
+    public function __construct(array $options = [], array $collaborators = []) {
+        if ($urlAuthorize = $options['urlAuthorize'] ?? null) {
+            $this->urlAuthorize = $urlAuthorize;
+            unset($options['urlAuthorize']);
+        }
+        
+        if ($urlAccessToken = $options['urlAccessToken'] ?? null) {
+            $this->urlAccessToken = $urlAccessToken;
+            unset($options['urlAccessToken']);
+        }
+        
+        if ($urlResourceOwnerDetails = $options['urlResourceOwnerDetails'] ?? null) {
+            $this->urlResourceOwnerDetails = $urlResourceOwnerDetails;
+            unset($options['urlResourceOwnerDetails']);
+        }
+        
+        parent::__construct($options, $collaborators);
+    }
 
     public function getBaseAuthorizationUrl(): string
     {
